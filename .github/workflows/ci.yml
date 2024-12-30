@@ -1,1 +1,54 @@
+name: Node.js CI
+
+# Trigger the workflow on push to the main branch or pull requests to it
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  # CI job for testing the application
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Set the Node.js version you want to use (can change according to your project)
+
+      # Step 3: Cache npm dependencies to speed up the build
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 5: Run tests using Jest (or any other test framework you are using)
+      - name: Run tests
+        run: npm test  # Make sure you have a "test" script in package.json
+
+      # Step 6: Upload test results (optional, can be useful for reporting)
+      - name: Upload test results
+        if: failure()  # Only upload if tests fail
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: ./test-results # Adjust the path based on where your test results are generated
 
