@@ -5,8 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:product": "node ./product-service/index.js",
+    "start:order": "node ./order-service/index.js",
     "start:gateway": "node ./api-gateway/index.js",
-    "start": "concurrently \"npm run start:product\" \"npm run start:gateway\""
+    "start": "concurrently \"npm run start:product\" \"npm run start:order\" \"npm run start:gateway\""
   },
   "keywords": [],
   "author": "",
