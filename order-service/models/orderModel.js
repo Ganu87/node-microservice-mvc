@@ -2,6 +2,7 @@ const db = require('../db/db');
 
 // Get all orders
 async function getAllOrders  ()  {
+    console.log("in order model");
     const result = await db.query('SELECT * FROM orders');
     return result.rows;
 };

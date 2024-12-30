@@ -6,6 +6,7 @@ async function getProducts(req, res) {
         const products = await Product.find();
         res.status(200).json(products);
     } catch (error) {
+        console.error('Error fetching products:', error); // Log the error
         res.status(500).json({ message: 'Failed to fetch products', error });
     }
 };
