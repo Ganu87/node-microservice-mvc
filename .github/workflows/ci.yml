@@ -47,8 +47,7 @@ jobs:
       # Step 6: Upload test results (optional, can be useful for reporting)
       - name: Upload test results
         if: failure()  # Only upload if tests fail
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Updated to version 3
         with:
           name: test-results
           path: ./test-results # Adjust the path based on where your test results are generated
-
