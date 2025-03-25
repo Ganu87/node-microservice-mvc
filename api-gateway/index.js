@@ -37,6 +37,22 @@ app.use('/orders', async (req, res) => {
     }
 });
 
+app.use('/user', async (req, res) => {
+    const method = req.method.toLowerCase();
+    try {
+        console.log("users "+req.originalUrl);
+        const response = await axios({
+            method,
+            url: `http://localhost:3005${req.originalUrl}`,
+            data: req.body,
+        });
+        res.status(response.status).json(response.data);
+    } catch (err) {
+        console.error('Error communicating with User Service:', err.message);
+        res.status(err.response?.status || 500).send(err.message || 'Error occurred');
+    }
+});
+
 if (process.env.NODE_ENV !== 'test') {
     app.listen(3000, () => console.log('API Gateway running on port 3000'));
 }
